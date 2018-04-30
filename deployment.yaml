@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      name: node-starter
+  template:
+    metadata:
+      labels:
+        name: node-starter
+    spec:
+      containers:
+      - name: node-starter
+        image: allenxyz/nodejs-template
+        ports:
+        - containerPort: 3000
