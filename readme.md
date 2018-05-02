@@ -8,13 +8,13 @@
 
 - The node image listening to port 3000, if your application is using different port, make sure do the following changes:
 
-> line 19: `- containerPort: 3000` in [./deployment.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/deployment.yaml)
+  > line 19: `- containerPort: 3000` in [./deployment.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/deployment.yaml)
 
-> line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile) 
+  > line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile) 
 
-> line 8 and line 14 `targetPort: 3000` [./service.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/service.yaml) 
+  > line 8 and line 14 `targetPort: 3000` [./service.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/service.yaml) 
 
-to the corresponding port.
+  to the corresponding port.
 
 ### To run the demo
 ```
@@ -51,13 +51,13 @@ $ docker push -t <your_docker_repo>/<your_image_name>:<version>
 ```
 $ cd .. && vim deployment.yaml
 
-# Change line 17 to image: my_node_app:v1 and save
+# Change line 17 to image: <your_docker_repo>/<your_image_name>:<version> and save
 
 $ kubectl create -f deployment.yaml
 ```
 
 
-> If your k8s already deployed with demo image, update k8s deployment use your new image
+> If your k8s already deployed with demo image, update k8s deployment to use your new image
 
 ```
 $ kubectl edit deployment node-deployment
