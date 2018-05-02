@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: node-starter
-        image: https://registry.hub.docker.com/allenxyz/nodejs-template  #allenxyz/nodejs-template
+        image: allenxyz/nodejs-template
         ports:
         - containerPort: 3000
