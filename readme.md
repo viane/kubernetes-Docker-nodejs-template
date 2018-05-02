@@ -6,8 +6,15 @@
 
 - /app is the node-template docker image
 
-- The node image listening to port 3000, if your application is using different port, make sure change the line 19: `- containerPort: 3000` in [./deployment.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/deployment.yaml) and line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile) to the corresponding port.
+- The node image listening to port 3000, if your application is using different port, make sure do the following changes:
 
+> line 19: `- containerPort: 3000` in [./deployment.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/deployment.yaml)
+
+> line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile) 
+
+> line 8 and line 14 `targetPort: 3000` [./service.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/service.yaml) 
+
+to the corresponding port.
 
 ### To run the demo
 ```
@@ -25,8 +32,45 @@ $ curl $(minikube ip)$(kubectl get svc node-starter | grep -oe ':\d*')
 
 ### Build and Deploy your docker node image
 ```
-cd kubernetes-Docker-nodejs-template-master/app
+$ cd kubernetes-Docker-nodejs-template-master/app
 
-docker build -t my_node_app:v1 ./
+# Make change to the nodejs app
+...
 
+$ docker build -t <your_docker_repo>/<your_image_name>:<version> ./
+
+$ docker login
+
+...
+
+$ docker push -t <your_docker_repo>/<your_image_name>:<version>
+```
+
+> If your k8s doesn't have node app deployed yet
+
+```
+$ cd .. && vim deployment.yaml
+
+# Change line 17 to image: my_node_app:v1 and save
+
+$ kubectl create -f deployment.yaml
+```
+
+
+> If your k8s already deployed with demo image, update k8s deployment use your new image
+
+```
+$ kubectl edit deployment node-deployment
+
+# Edit line 38 to image: <your_docker_repo>/<your_image_name>:<version> and save
+```
+
+```
+# Make sure NodePort service is up for local dev (using minikue)
+$ kubectl create -f service.yaml
+```
+
+```
+# Reuqest your node app
+$ curl $(minikube ip)$(kubectl get svc node-starter | grep -oe ':\d*')
 ```
