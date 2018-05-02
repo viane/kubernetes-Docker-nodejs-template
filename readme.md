@@ -1,11 +1,15 @@
 # K8s-docker nodejs template
 
-#### Make sure you have [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed, and for local development, [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) is recommended.
+### Make sure do the following for setup:
 
-#### /app is the node-template docker image
+- Have [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed, and for local development, [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) is recommended.
 
-#### The node image listening to port 3000, if your application is using different port, make sure change the line 19: `- containerPort: 3000` in [./deployment.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/deployment.yaml) and line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile) to the corresponding port.
+- /app is the node-template docker image
 
+- The node image listening to port 3000, if your application is using different port, make sure change the line 19: `- containerPort: 3000` in [./deployment.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/deployment.yaml) and line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile) to the corresponding port.
+
+
+### To run the demo
 ```
 cd kubernetes-Docker-nodejs-template-master
 
@@ -19,3 +23,10 @@ kubectl create -f service.yaml
 $ curl $(minikube ip)$(kubectl get svc node-starter | grep -oe ':\d*')
 ```
 
+### Build and Deploy your docker node image
+```
+cd kubernetes-Docker-nodejs-template-master/app
+
+docker build -t my_node_app:v1 ./
+
+```
