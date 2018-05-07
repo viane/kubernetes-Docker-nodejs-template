@@ -1,6 +1,7 @@
 version: "2"
 services:
   app:
+    container_name: web-app
     restart: always
     build: ./app
     volumes:
@@ -10,6 +11,7 @@ services:
     depends_on:
     - mongo
   mongo:
+    container_name: mongoDB
     image: mongo
     volumes:
       - ./app/data:/data/db
