@@ -18,18 +18,8 @@ const connectWithRetry = () => {
     // If not connected, return errors immediately rather than waiting for reconnect
     bufferMaxEntries: 0
   }).then(()=>{
-    /*
-      mongoose.connection.on('connected', () => {
-        ...
-      })
-    */
     console.log('MongoDB is connected')
   }).catch(err=>{
-    /**
-      mongoose.connection.on('error', err => {
-        ...
-      })
-    **/
     console.log('MongoDB connection unsuccessful, retry after 5 seconds.')
     setTimeout(connectWithRetry, 5000)
   })
