@@ -10,9 +10,9 @@
 
   > line 19: `- containerPort: 3000` in [./deployment.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/deployment.yaml)
 
-  > line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile) 
+  > line 10:`EXPOSE 3000` [./app/Dockerfile](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/app/Dockerfile)
 
-  > line 8 and line 14 `targetPort: 3000` [./service.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/service.yaml) 
+  > line 8 and line 14 `targetPort: 3000` [./service.yaml](https://github.com/viane/kubernetes-Docker-nodejs-template/blob/master/service.yaml)
 
   to the corresponding port.
 
@@ -43,7 +43,7 @@ $ docker login
 
 ...
 
-$ docker push -t <your_docker_repo>/<your_image_name>:<version>
+$ docker push <your_docker_repo>/<your_image_name>:<version>
 ```
 
 > If your k8s doesn't have node app deployed yet
