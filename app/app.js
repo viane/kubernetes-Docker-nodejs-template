@@ -4,6 +4,7 @@ const app = express();
 const moment = require('moment');
 const startTime = moment();
 const mongoose = require('mongoose');
+const visitRecord = require('/model/visit');
 
 mongoose.Promise = bluebird
 mongoose.set('debug', true)
@@ -30,6 +31,36 @@ app.get('/', function (req, res) {
   res.status(200).json({message:'Hello World',
                         server_lived:moment.duration(now.diff(startTime)).humanize(true)
                       });
+})
+
+app.get('/history', (req,res)=>{
+  // create and save the request info
+  const record = new visitRecord();
+  record.info = JSON.stringify(req.headers);
+
+  record.save().then((data)=>{
+    console.log("Record new visit history");
+
+    visitRecord.find({}).then((data)=>{
+      const history = data.map(record => {
+        record.date = moment(record.date).format('MMMM Do YYYY, h:mm:ss a')
+        record.info = JSON.parse(record.info)
+        return record
+      })
+      res.status(200).json({visit_histroy:history})
+    }).catch(err=>{
+      console.error(err);
+    })
+  }).catch(err=>{
+    console.error(err);
+  })
+})
+
+app.get('/clear-history', (req,res)=>{
+  // create and save the request info
+  const record = new visitRecord();
+    visitRecord.remove({}).then((data)=>{
+      res.status(200).json({"message":"success"})}).catch(err=>{console.error(err)})
 })
 
 const server = app.listen(3000, function () {
